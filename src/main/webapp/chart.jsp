@@ -24,11 +24,25 @@
     }
 
 </style>
-<body>
-<button>Update</button>
+
+<body onResize="refresh()">
 <script src="./js/d3.v4.min.js"></script>
 <script src="./js/techan.min.js"></script>
 <script>
+
+function vwidth(){
+   return window.innerWidth 
+       || document.documentElement.clientWidth 
+       || document.body.clientWidth 
+       || 0;
+}
+
+function vheight(){
+   return window.innerHeight 
+       || document.documentElement.clientHeight 
+       || document.body.clientHeight 
+       || 0;
+}
 
     function toFormat(da){
         console.log("FMT:" + da);
@@ -39,9 +53,13 @@
         return sda;
     }
     var symbol = '<%=request.getParameter("symbol")%>';
+
+    function refresh() { location.reload(); }
+
+
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = vwidth() - margin.left - margin.right,
+    height = (vheight()) - margin.top - margin.bottom;
 
     var parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); //.parse; // d3.timeParse("%y-%b-%d");
 
@@ -119,3 +137,5 @@
     }
 
 </script>
+
+<body onResize="refresh()">

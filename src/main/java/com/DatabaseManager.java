@@ -55,9 +55,7 @@ class DataSource {
         cpds.setJdbcUrl("jdbc:mysql://localhost/hdb?autoReconnect=true&useSSL=false"); //&useSSL=false
         cpds.setUser("root");
         cpds.setPassword("");
-        //cpds.setUser("root");
-        //cpds.setPassword("123abc");
-        //cpds.setPassword("123abc000$$$xp7yZ");
+        
         cpds.setMinPoolSize(50);
         cpds.setAcquireIncrement(15);
         
