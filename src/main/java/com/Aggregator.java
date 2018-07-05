@@ -53,6 +53,21 @@ class Aggregator {
     public static void main(String[] args) {
         
         try { 
+            // Range can be:            
+            // MINUTE
+            // #5MINUTE
+            // #15MINUTE
+            // 1HOUR
+            // #3HOUR
+            // 1DAY
+            // 1WEEK
+            // 1MONTH
+            
+            String range = "MINUTE"; //args[0];
+            //if( range == null || range.equals("") || range.equalsIgnoreCase("null") ) { 
+            //    range = "MINUTE";
+            //}
+            
             System.out.println("Aggregator called. Building Feed Source.");
             
             FeedSource source = new FeedSource();
@@ -72,10 +87,11 @@ class Aggregator {
 
             Iterator itr = feedList.iterator();    
             System.out.println("Creating Database");
-            Database db = new Database();        
+        
             
             while( itr.hasNext() ){
                 try { 
+                    Database db = new Database();
                     System.out.println("Loading feed...");
                     GenericFeed feed = (GenericFeed)itr.next();
                     Instrument instrument = feed.getInstrument();
@@ -90,15 +106,16 @@ class Aggregator {
                     rate.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
                     System.out.println("write:" + instrument + " " + rate);
-                    db.save( instrument, rate, source );
+                    db.save( instrument, rate, source, range );
+                            
+                    db.close();
+                    db = null;
+            
                 } catch(Exception ex) { 
                     ex.printStackTrace();
                 }
             }
-        
-            db.close();
-            db = null;
-            
+
         } catch(Exception ex) { 
             ex.printStackTrace();
         } finally { 

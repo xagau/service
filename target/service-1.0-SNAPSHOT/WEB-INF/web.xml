@@ -11,11 +11,23 @@
         <servlet-name>DataServlet</servlet-name>
         <servlet-class>servlet.DataServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>CSVServlet</servlet-name>
+        <servlet-class>servlet.CSVServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>DataServlet</servlet-name>
         <url-pattern>/DATA</url-pattern>
     </servlet-mapping>
+    
+    
+    <servlet-mapping>
+        <servlet-name>CSVServlet</servlet-name>
+        <url-pattern>/CSV</url-pattern>
+    </servlet-mapping>
+    
     
     <servlet>
         <servlet-name>JSONServlet</servlet-name>
@@ -42,7 +54,8 @@
     <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
     <init-param>
         <param-name>cors.allowed.origins</param-name>
-        <param-value>https://staging.herc.one,https://herc.one</param-value>
+        <param-value>*</param-value>
+        <!-- <param-value>https://staging.herc.one,https://herc.one,https://chart.anthemgold.com,https://www.anthemgold.com,http://13.58.233.249:8080,https://18.191.191.245:8080</param-value> -->
     </init-param>
     <init-param>
         <param-name>cors.allowed.methods</param-name>

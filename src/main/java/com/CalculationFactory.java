@@ -40,7 +40,7 @@ import java.text.DecimalFormat;
  * @author Sean Beecroft
  */
 public class CalculationFactory {
-    public static Calculation getCalculation()
+    public static Calculation getCalculation(long dataRequired)
     {
         
         GenericFeed f1 = new BitcoinChartFeed();
@@ -105,7 +105,7 @@ public class CalculationFactory {
         double storjPrice = Feed.getSTORJPrice(1.0); //0.00000002; // USD
         double factoidPrice = Feed.getFCTPrice(1.0);
 
-        long dataRequired = 100000;
+        //long dataRequired = 100000;
 
         long siaDataRequiredKB = dataRequired;
         long fctDataRequiredKB = dataRequired;

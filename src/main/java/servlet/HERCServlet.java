@@ -74,7 +74,16 @@ public class HERCServlet extends HttpServlet {
             
             System.out.println("Create GSON");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Calculation calc = CalculationFactory.getCalculation();
+            
+            Integer requiredData = null;
+            
+            try { 
+                Integer.parseInt(request.getParameter("dataRequiredKB"));
+            } catch(Exception ex) {
+                requiredData = new Integer(100000);
+            }
+            
+            Calculation calc = CalculationFactory.getCalculation(requiredData);
             
             System.out.println("Return Calculation");
             Type type = new TypeToken<Calculation>(){}.getType();

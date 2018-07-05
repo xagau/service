@@ -34,6 +34,9 @@ import java.sql.Timestamp;
  */
 public class Rate {
 
+    public Rate() { 
+        
+    }
     /**
      * @return the open
      */

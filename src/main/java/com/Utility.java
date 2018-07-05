@@ -23,9 +23,8 @@ See the License for the specific language governing permissions and
 
 limitations under the License.
 
-*/
+ */
 package com;
-
 
 import com.feed.BitcoinAverageFeed;
 import com.feed.BitcoinChartFeed;
@@ -64,7 +63,8 @@ import servlet.HERCServlet;
  * @author xagau
  */
 public class Utility {
-        public static void log(String msg) {
+
+    public static void log(String msg) {
         long memory = Runtime.getRuntime().freeMemory();
         long total = Runtime.getRuntime().totalMemory();
         Date dt = new Date(System.currentTimeMillis());
@@ -73,11 +73,15 @@ public class Utility {
         System.gc();
 
     }
+    
+    public static String correctRange(String range)
+    {
+        if( range == null || range.equals("") || range.equalsIgnoreCase("null") ) { 
+                range = "MINUTE";
+        }
+        return range;
+    }
     public static final String UTF8_BOM = "\uFEFF";
-
-    
-
-    
 
     public static void discardBOM(String inFile, String outFile) {
         try {
@@ -140,9 +144,9 @@ public class Utility {
     }
 
     public static void closeQuietly(Connection conn, Statement statement, ResultSet result) {
-        
-        try { 
-             
+
+        try {
+
             if (result != null) {
                 try {
                     result.close();
@@ -165,30 +169,36 @@ public class Utility {
                 } catch (Exception ex) {
                 }
             }
-        
-        } catch(Exception ex) { 
-            
+
+        } catch (Exception ex) {
+
         } finally {
 
-            try { result.close(); } catch(Exception ex) { } 
-            try { statement.close(); } catch(Exception ex) { } 
-            try { conn.close(); } catch(Exception ex) { } 
+            try {
+                result.close();
+            } catch (Exception ex) {
+            }
+            try {
+                statement.close();
+            } catch (Exception ex) {
+            }
+            try {
+                conn.close();
+            } catch (Exception ex) {
+            }
 
             result = null;
             statement = null;
             conn = null;
-            
+
         }
-        
-        
+
         //System.gc();
-        
     }
 
     public static void closeQuietly(Connection conn, PreparedStatement statement, ResultSet result) {
-        
 
-        try { 
+        try {
             if (result != null) {
                 try {
                     result.close();
@@ -210,14 +220,23 @@ public class Utility {
                 } catch (Exception ex) {
                 }
             }
-        
-        } catch(Exception ex) { 
-            
-        } finally { 
-            try { result.close(); } catch(Exception ex) { } 
-            try { statement.close(); } catch(Exception ex) { } 
-            try { conn.close(); } catch(Exception ex) { } 
-            
+
+        } catch (Exception ex) {
+
+        } finally {
+            try {
+                result.close();
+            } catch (Exception ex) {
+            }
+            try {
+                statement.close();
+            } catch (Exception ex) {
+            }
+            try {
+                conn.close();
+            } catch (Exception ex) {
+            }
+
             result = null;
             statement = null;
             conn = null;
@@ -225,7 +244,6 @@ public class Utility {
         }
 
         //System.gc();
-        
     }
 
     public static Date getOneWeekAgo() {

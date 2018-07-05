@@ -328,15 +328,18 @@ public class DataServlet extends HttpServlet {
     PreparedStatement ps = null;
     ResultSet res = null;
     
-    public String getData(String symbol)
+    public String getData(String symbol, String range)
     {
         try {
+            range = Utility.correctRange(range);
+            
             String d = "Date,Open,High,Low,Close,Volume\n";
             conn = DatabaseManager.getConnection();
             
-            String sql = "select t.* from (select * from history where symbol = ? order by history.ts desc limit 200) t order by t.ts;";
+            String sql = "select t.* from (select * from history where symbol = ? and mrange = ? order by history.ts desc limit 200) t order by t.ts;";
             ps = conn.prepareStatement(sql);
             ps.setString(1, symbol);
+            ps.setString(2, range);
             
             res = ps.executeQuery();
             DecimalFormat df = new DecimalFormat("0.00");
@@ -380,7 +383,10 @@ public class DataServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            String data = getData(request.getParameter("symbol"));
+            String symbol = request.getParameter("symbol");
+            String range = request.getParameter("range");
+            
+            String data = getData(symbol, range);
 
             out.println(data);
             System.out.println("Write Quote");

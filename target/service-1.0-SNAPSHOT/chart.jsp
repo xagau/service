@@ -53,6 +53,7 @@ function vheight(){
         return sda;
     }
     var symbol = '<%=request.getParameter("symbol")%>';
+    var range = '<%=request.getParameter("range")%>';
 
     function refresh() { location.reload(); }
 
@@ -85,7 +86,7 @@ function vheight(){
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.csv("./DATA?symbol=" + symbol, function(error, data) {
+    d3.csv("./DATA?symbol=" + symbol + "&range=" + range, function(error, data) {
         var accessor = close.accessor();
 
         data = data.slice(0, 200).map(function(d) {
