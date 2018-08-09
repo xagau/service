@@ -1,5 +1,6 @@
 com\RangeTime.class
 servlet\HERCServlet.class
+com\feed\CADFeed.class
 com\feed\StorjFeed.class
 com\feed\CopperFeed.class
 com\Database.class
@@ -19,6 +20,7 @@ com\CalculationFactory.class
 com\Log.class
 servlet\HERCServlet$1.class
 com\feed\GasPriceFeed.class
+com\feed\BTCGoldFeed.class
 com\feed\EthereumFeed.class
 com\feed\BitcoinChartFeed.class
 com\feed\IpfsFeed.class

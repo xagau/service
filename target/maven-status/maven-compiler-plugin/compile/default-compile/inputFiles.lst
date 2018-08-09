@@ -5,6 +5,7 @@ C:\git\repo\service\src\main\java\com\Calculation.java
 C:\git\repo\service\src\main\java\com\Tranche.java
 C:\git\repo\service\src\main\java\servlet\DataServlet.java
 C:\git\repo\service\src\main\java\com\feed\ConsolidatedFeed.java
+C:\git\repo\service\src\main\java\com\feed\BTCGoldFeed.java
 C:\git\repo\service\src\main\java\com\feed\BitcoinFeed.java
 C:\git\repo\service\src\main\java\com\Base64.java
 C:\git\repo\service\src\main\java\com\feed\BlockChainInfoFeed.java
@@ -32,6 +33,7 @@ C:\git\repo\service\src\main\java\com\feed\FactomFeed.java
 C:\git\repo\service\src\main\java\com\feed\CopperFeed.java
 C:\git\repo\service\src\main\java\com\feed\BitcoinChartFeed.java
 C:\git\repo\service\src\main\java\com\feed\Feed.java
+C:\git\repo\service\src\main\java\com\feed\CADFeed.java
 C:\git\repo\service\src\main\java\com\feed\IpfsFeed.java
 C:\git\repo\service\src\main\java\servlet\HERCServlet.java
 C:\git\repo\service\src\main\java\com\feed\BitcoinAverageFeed.java

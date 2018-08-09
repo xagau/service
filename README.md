@@ -67,10 +67,21 @@ Contents of cronme.sh, placed in root (change if you like)
 cd /opt/tomcat/webapps/service-1.0-SNAPSHOT/WEB-INF/classes/
 java -cp ".:../lib/gson-2.8.0.jar:../lib/c3p0-0.9.1.2.jar:../lib/mysql-connector-java-8.0.11.jar" com.Aggregator
 ```
+We are using cronme-MINUTE_5.sh, cronme-MINUTE_15.sh, etc that are utilizing the Rake class. 
+```
+If you need to "rake" price data together, you can use the Rake class to accomplish this.
+The Rake class will use computation to produce OHLC values using input MINUTE as the basis.
+
+java -cp ".:../lib/gson-2.8.0.jar:../lib/c3p0-0.9.1.2.jar:../lib/mysql-connector-java-8.0.11.jar" com.Rake MINUTE_5
+java -cp ".:../lib/gson-2.8.0.jar:../lib/c3p0-0.9.1.2.jar:../lib/mysql-connector-java-8.0.11.jar" com.Rake MINUTE_15
+java -cp ".:../lib/gson-2.8.0.jar:../lib/c3p0-0.9.1.2.jar:../lib/mysql-connector-java-8.0.11.jar" com.Rake MINUTE_30
+java -cp ".:../lib/gson-2.8.0.jar:../lib/c3p0-0.9.1.2.jar:../lib/mysql-connector-java-8.0.11.jar" com.Rake HOUR_1 
+
+etc
 
 You will need to create your SQL table
 ```
- create table history ( symbol varchar (16), source varchar(256), ts datetime, bid double, ask double, volume long, o double, h double, l double, c double );
+ create table history ( symbol varchar (16), source varchar(256), ts datetime, bid double, ask double, volume long, o double, h double, l double, c double, mrange varchar (16) );
  ```
 
 Ideally, add indexes as you see fit. If you are running mysql you will need to adjust wait_timeout and interactive_timeout to avoid heapspace issues.

@@ -266,14 +266,14 @@ public class Calculation {
     }
 
     public double calculateEthereumNeeded(double gasPrice, double ethPrice) {
-        return gasPrice ;
+        return gasPrice / ethPrice;
     }
     
     public double calculateHercBurned(double gasPrice, double ethPrice) {
-        return gasPrice * ethPrice;
+        return gasPrice / ethPrice;
     }
     
-    public double calculateHercNeeded(double storjNeeded, double factoidNeeded, double ethNeeded, double hercBurned, double hercPrice) {
-        return (storjNeeded / hercPrice) + (factoidNeeded / hercPrice) + (ethNeeded / hercPrice) + hercBurned;
+    public double calculateHercNeeded(double storjNeeded, double _storjPriceInUSD, double factoidNeeded, double _factoidPriceInUSD, double ethNeeded, double _ethPriceInUSD, double hercBurned, double hercPrice, double hercPriceInUSD) {
+        return ((storjNeeded * _storjPriceInUSD) + (factoidNeeded * _factoidPriceInUSD) + (ethNeeded * _ethPriceInUSD)) / hercPriceInUSD;
     }
 }

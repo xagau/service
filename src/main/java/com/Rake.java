@@ -27,6 +27,7 @@ limitations under the License.
 package com;
 
 
+import com.feed.BTCGoldFeed;
 import com.feed.BitcoinFeed;
 import com.feed.EthereumFeed;
 import com.feed.Feed;
@@ -109,6 +110,7 @@ public class Rake {
             FeedSource source = new FeedSource();
             source.setName("NONE");
             ArrayList<GenericFeed> feedList = new ArrayList<GenericFeed>();
+            try { feedList.add(new BTCGoldFeed());} catch(Exception ex) { ex.printStackTrace(); System.out.println("Failed to add BTCGoldFeed"); }
             try { feedList.add(new BitcoinFeed());} catch(Exception ex) { ex.printStackTrace(); System.out.println("Failed to add BitcoinFeed"); }
             try { feedList.add(new GasPriceFeed());} catch(Exception ex) { ex.printStackTrace(); System.out.println("Failed to add GasPriceFeed"); }
             try { feedList.add(new FactomFeed());} catch(Exception ex) { ex.printStackTrace(); System.out.println("Failed to add FactomFeed"); }
@@ -158,7 +160,7 @@ public class Rake {
                     Rate rate = new Rate();
                     rate.setBid(open);
                     rate.setAsk(open);
-                    
+
                     rate.setHigh(high);
                     rate.setLow(low);
                     rate.setOpen(open);
@@ -166,8 +168,10 @@ public class Rake {
 
                     rate.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-                    System.out.println("write:" + instrument + " " + rate + " mrange:" + range);
-                    db.save( instrument, rate, source, range );
+                    if( Utility.isValidRate(rate) ){
+                        System.out.println("write:" + instrument + " " + rate + " mrange:" + range);
+                        db.save( instrument, rate, source, range );
+                    }
                     
                     db.close();
                     db = null;

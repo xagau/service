@@ -398,6 +398,21 @@ public class Utility {
         }
         return true;
     }
+    
+    public static boolean isValidRate(Rate rate) {
+        if (rate == null) {
+            return false;
+        } else if (rate.getOpen() == 0) {
+            return false;
+        } else if (rate.getClose() == 0) {
+            return false;
+        } else if (rate.getHigh() == 0) {
+            return false;
+        } else if (rate.getLow() == 0) {
+            return false;
+        } 
+        return true;
+    }
 
     public static boolean isValidPassword(String password) {
         if (password == null) {

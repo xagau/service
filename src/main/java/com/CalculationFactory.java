@@ -61,8 +61,19 @@ public class CalculationFactory {
 
         DecimalFormat df = new DecimalFormat("0.00000000");
 
+        System.out.println("INPUT BITCOIN PRICE USD:" + bp);
+        System.out.println("INPUT ETHEREUM PRICE USD:" + ep);
+        System.out.println("INPUT STORJ PRICE USD:" + sp);
+        System.out.println("INPUT FACTOID PRICE USD:" + fp);
+        System.out.println("INPUT IPFS PRICE USD:" + ip);
+        
         System.out.println("--");
+        System.out.println("--");
+        
+        System.out.println("--");
+        
         System.out.println("Tranche 1 - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 0.5)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 0.5)) + " per BTC");
+        System.out.println("Tranche 1a - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 0.6)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 0.6)) + " per BTC");
         System.out.println("Tranche 2 - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 0.7)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 0.7)) + " per BTC");
         System.out.println("Tranche 3 - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 0.75)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 0.75)) + " per BTC");
         System.out.println("Tranche 4 - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 0.90)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 0.90)) + " per BTC");
@@ -70,6 +81,7 @@ public class CalculationFactory {
         System.out.println("Tranche 6 - 1 BTC Purchases:" + df.format(getHERCPricePerBTC(bp, 1, 1)) + " OR " + df.format(1 / getHERCPricePerBTC(bp, 1, 1)) + " per BTC");
 
         System.out.println("Tranche 1 - 1 ETH Purchases:" + df.format(getHERCPricePerETH(ep, 1, 0.5)) + " OR " + df.format(1 / getHERCPricePerETH(ep, 1, 0.5)) + " per ETH");
+        System.out.println("Tranche 1a - 1 ETH Purchases:" + df.format(getHERCPricePerETH(ep, 1, 0.6)) + " OR " + df.format(1 / getHERCPricePerETH(ep, 1, 0.6)) + " per ETH");
         System.out.println("Tranche 2 - 1 ETH Purchases:" + df.format(getHERCPricePerETH(ep, 1, 0.7)) + " OR " + df.format(1 / getHERCPricePerETH(ep, 1, 0.7)) + " per ETH");
         System.out.println("Tranche 3 - 1 ETH Purchases:" + df.format(getHERCPricePerETH(ep, 1, 0.75)) + " OR " + df.format(1 / getHERCPricePerETH(ep, 1, 0.75)) + " per ETH");
         System.out.println("Tranche 4 - 1 ETH Purchases:" + df.format(getHERCPricePerETH(ep, 1, 0.90)) + " OR " + df.format(1 / getHERCPricePerETH(ep, 1, 0.90)) + " per ETH");
@@ -88,6 +100,7 @@ public class CalculationFactory {
         quote.setCurrentTranche(currentTranche);
         System.out.println("Set Tranche");
         Tranche tranche1 = new Tranche("Tranche1", 0.50, bp, ep, sp, fp, ip);
+        Tranche tranche1a = new Tranche("Tranche1a", 0.60, bp, ep, sp, fp, ip);
         Tranche tranche2 = new Tranche("Tranche2", 0.70, bp, ep, sp, fp, ip);
         Tranche tranche3 = new Tranche("Tranche3", 0.75, bp, ep, sp, fp, ip);
         Tranche tranche4 = new Tranche("Tranche4", 0.90, bp, ep, sp, fp, ip);
@@ -97,7 +110,8 @@ public class CalculationFactory {
         double btcPrice = Feed.getBTCPrice(1);
         double hercNeeded = 0;
         //Tranche t = new Tranche();
-        double hercPrice = Feed.getHERCPricePerBTC(btcPrice, 1, tranche6.getRatio());
+        double hercPrice = tranche1a.getRatio();
+        //double hercPrice = Feed.getHERCPricePerBTC(btcPrice, 1, tranche1a.getRatio());
         double siaNeeded = 0;
         double siaPrice = Feed.getSIAPrice(1.0); //0.00000253;
         double factoidNeeded = 0;
@@ -131,12 +145,19 @@ public class CalculationFactory {
         calc.setStorjDataRequiredKB(storjDataRequiredKB);
         calc.setHercPrice(hercPrice);
 
+        double pricePerHERCInUSD = tranche1a.getRatio();
         ethNeeded = calc.calculateEthereumNeeded(gasPrice, ethPrice);
         hercBurned = ethNeeded;
         factoidNeeded = calc.calculateFactoidNeeded(fctDataRequiredKB, factoidPriceInUSDPerKB, factoidPrice);
         siaNeeded = calc.calculateSiaNeeded(siaDataRequiredKB, siaPriceInUSDPerKB, siaPrice);
-        hercNeeded = calc.calculateHercNeeded(siaNeeded, factoidNeeded, ethNeeded, hercBurned, hercPrice);
         storjNeeded = calc.calculateStorjNeeded(storjDataRequiredKB, storjPriceInUSDPerKB, storjPrice);
+        
+        double storjPriceInUSD = storjPrice;
+        double factoidPriceInUSD = factoidPrice;
+        double ethPriceInUSD = ethPrice;
+        
+        hercNeeded = calc.calculateHercNeeded(storjNeeded, storjPriceInUSD, factoidNeeded, factoidPriceInUSD, ethNeeded, ethPriceInUSD, hercBurned, hercPrice, pricePerHERCInUSD);
+
 
         System.out.println("Data Required:" + dataRequired);
         System.out.println("GAS Price:" + df.format(gasPrice) + " USD (Standard Transfer)");
@@ -155,8 +176,8 @@ public class CalculationFactory {
  
         calc.setEthNeeded(ethNeeded);
         calc.setFactoidNeeded(factoidNeeded);
-        calc.setFactoidNeeded(factoidNeeded);
         calc.setGasPrice(gasPrice);
+        calc.setHercNeeded(hercNeeded);
         calc.setHercBurned(hercBurned);
         calc.setSiaNeeded(siaNeeded);
         calc.setStorjNeeded(storjNeeded);

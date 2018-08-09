@@ -78,7 +78,7 @@ public class HERCServlet extends HttpServlet {
             Integer requiredData = null;
             
             try { 
-                Integer.parseInt(request.getParameter("dataRequiredKB"));
+                requiredData = Integer.parseInt(request.getParameter("dataRequiredKB"));
             } catch(Exception ex) {
                 requiredData = new Integer(100000);
             }

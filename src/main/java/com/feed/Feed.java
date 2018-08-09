@@ -63,8 +63,10 @@ public class Feed {
     
 
     public static double getBTCPrice(double units) {
-        ConsolidatedFeed c = new ConsolidatedFeed();
-        return c.getPrice(units);
+        BitcoinFeed bf = new BitcoinFeed();
+        double bp = bf.getPrice(1);
+        //ConsolidatedFeed c = new ConsolidatedFeed();
+        return bp;
     }
 
 
